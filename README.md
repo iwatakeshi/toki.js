@@ -1,7 +1,7 @@
 toki.js
 =======
 
-The most basic and hack-able calendar for the web. Uses pure javascript and is bootstrap ready.
+The most basic and hack-able calendar for the web. Uses pure javascript and is Bootstrap ready.
 
 
 #Usage
@@ -29,56 +29,56 @@ The most basic and hack-able calendar for the web. Uses pure javascript and is b
   ```
 #API
 
-##Month
+##Month()
 
-@Set Sets the month with ranges from 0 - 11
+@description: Sets the month with ranges from 0 - 11
 
-@Return Returns the global month name in String
+@return: Returns the global month name in String
 
 ```js
 Month([month Number])
 
 ```
-##Day
+##Day()
 
-@Set Sets the day of the current month
+@description: Sets the day of the current month
 
-@Return Returns global day
+@return: Returns global day
 
 ```js
 Day([day Number])
 ```
-##Year
+##Year()
 
-@Set Sets the year.
+@description: Sets the year.
 
-@Return Returns global year
+@return: Returns global year
 
 ```js
 Year([year Number])
 ```
 
-##Date
+##Date()
 
-@Set Sets the date.
+@description: Sets the date.
 
-@Returns (not implemented)
+@return: (not implemented)
 
 ```js
 Date([month Number], [day Number], [year Number]);
 ```
 
-##Reset
+##Reset()
 
-@Call Resets the date.
+@description: Resets the date.
 
 ```js
 Reset();
 ```
 
-##Locale
+##Locale()
 
-@Set Set's the locale.
+@description: Set's the locale.
 
 ```js
 Locale([lang String],[length String]);
@@ -97,6 +97,63 @@ Locale([lang String],[length String]);
 
 ```
 
-###Other Methods
 
-###
+###Static API
+
+####isLeapYear()
+
+@description: Checks if the given year is a leap year.
+
+@return Returns a Boolean for a given year.
+
+```js
+isLeapYear([year Number]);
+```
+
+####weeksInMonth()
+
+@description: see @return
+
+@return Returns the number of weeks for a given month and year
+
+```js
+weeksInMonth([month Number], [year Number]);
+```
+
+####daysInMonth()
+
+@description: see @return
+
+@return Returns the number of days for a given month and year
+
+```js
+daysInMonth([month Number], [year Number]);
+```
+
+####firstDayOfMonth()
+
+@description: see @return
+
+@return Returns the first day (index of weekday) for a given month and year.
+
+```js
+firstDayOfMonth([month Number], [year Number]);
+```
+####lastDayOfMonth()
+
+@description: see @return
+
+@return Returns the last day (index of weekday) for a given month and year.
+
+```js
+lastDayOfMonth([month Number], [year Number]);
+```
+####weekOfMonth()
+
+@description: see @return
+
+@return Returns the current week for a given month, day, and year.
+
+```js
+weekOfMonth([month Number], [day Number], [year Number]);
+```
