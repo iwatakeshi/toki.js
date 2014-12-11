@@ -4,7 +4,7 @@ toki.js
 The most basic and hack-able calendar for the web. Uses pure javascript and is Bootstrap ready.
 
 
-#Usage
+###Usage
 
 1. Include toki into your project
   
@@ -27,9 +27,9 @@ The most basic and hack-able calendar for the web. Uses pure javascript and is B
     var t = toki('toki', {/*options*/})
   </script>
   ```
-#API
+###API
 
-##Month()
+####Month()
 
 @description: Sets the month with ranges from 0 - 11
 
@@ -39,7 +39,7 @@ The most basic and hack-able calendar for the web. Uses pure javascript and is B
 Month([month Number])
 
 ```
-##Day()
+####Day()
 
 @description: Sets the day of the current month
 
@@ -48,7 +48,7 @@ Month([month Number])
 ```js
 Day([day Number])
 ```
-##Year()
+####Year()
 
 @description: Sets the year.
 
@@ -58,7 +58,7 @@ Day([day Number])
 Year([year Number])
 ```
 
-##Date()
+####Date()
 
 @description: Sets the date.
 
@@ -68,7 +68,7 @@ Year([year Number])
 Date([month Number], [day Number], [year Number]);
 ```
 
-##Reset()
+####Reset()
 
 @description: Resets the date.
 
@@ -76,7 +76,7 @@ Date([month Number], [day Number], [year Number]);
 Reset();
 ```
 
-##Locale()
+####Locale()
 
 @description: Set's the locale.
 
@@ -98,9 +98,9 @@ Locale([lang String],[length String]);
 ```
 
 
-###Static API
+#####Static API
 
-####isLeapYear()
+######isLeapYear()
 
 @description: Checks if the given year is a leap year.
 
@@ -110,7 +110,7 @@ Locale([lang String],[length String]);
 isLeapYear([year Number]);
 ```
 
-####weeksInMonth()
+######weeksInMonth()
 
 @description: see @return
 
@@ -120,7 +120,7 @@ isLeapYear([year Number]);
 weeksInMonth([month Number], [year Number]);
 ```
 
-####daysInMonth()
+######daysInMonth()
 
 @description: see @return
 
@@ -130,7 +130,7 @@ weeksInMonth([month Number], [year Number]);
 daysInMonth([month Number], [year Number]);
 ```
 
-####firstDayOfMonth()
+######firstDayOfMonth()
 
 @description: see @return
 
@@ -139,7 +139,7 @@ daysInMonth([month Number], [year Number]);
 ```js
 firstDayOfMonth([month Number], [year Number]);
 ```
-####lastDayOfMonth()
+######lastDayOfMonth()
 
 @description: see @return
 
@@ -148,7 +148,7 @@ firstDayOfMonth([month Number], [year Number]);
 ```js
 lastDayOfMonth([month Number], [year Number]);
 ```
-####weekOfMonth()
+######weekOfMonth()
 
 @description: see @return
 
@@ -156,4 +156,43 @@ lastDayOfMonth([month Number], [year Number]);
 
 ```js
 weekOfMonth([month Number], [day Number], [year Number]);
+```
+
+###Options
+
+##### `fullHeading`: `Boolean` 
+
+@description: Displays the month and year in a singe row or in it's own row.
+
+@default: `false`
+
+##### `bootstrap`: `Boolean`
+
+@description: Enables to table to work with bootstrap by appending the necessary class names.
+
+@default: `false`
+
+##### `hover`: `Boolean`
+
+@description: Enables the table to be hoverable when boostrap is enabled.
+
+@default: `false`
+
+##### `debug`: `Boolean`
+
+@description: Enables developers to use the `debug` method for debugggin purposes.
+
+@default: `false`
+
+##### `locale`: `Object`
+
+@description: Changes the language and/or the length of the displayed date.
+
+@default:
+  
+```js
+  {
+    lang: 'en',
+    length: 'long'
+  }
 ```
