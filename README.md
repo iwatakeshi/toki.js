@@ -204,7 +204,7 @@ weekOfMonth([month Number], [day Number], [year Number]);
 
 toki.js is very hackable when it comes to css. Most of toki's rows and columns have ids and classes which makes it customizable all around.
 
-toki.js follows the normal table creation standards meaning the hierarchy looks like so:
+toki.js follows the normal table creation standards, meaning the hierarchy looks like so:
 
 ```html
 <div id="toki">
