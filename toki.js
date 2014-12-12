@@ -11,6 +11,7 @@
 (function() {
 
     var toki,
+        version = '0.0.1',
         //global month, day, year
         global = {
             month: new Date().getMonth(),
@@ -21,7 +22,7 @@
         month_names = {
             'en': {
                 long: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
-                short: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_')
+                short: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_'),
                 min: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_')
             },
             'ja': {
