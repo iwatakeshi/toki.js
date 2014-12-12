@@ -27,6 +27,9 @@ The most basic and hack-able calendar for the web. Uses pure javascript and is B
     var t = toki('toki', {/*options*/})
   </script>
   ```
+
+**Note:** toki.js can be initialize without any arguments. When done so, toki assumes that a div with an id='toki' will exist. It will also initialize with the default options.
+
 ###API
 
 ####Month()
@@ -195,4 +198,74 @@ weekOfMonth([month Number], [day Number], [year Number]);
     lang: 'en',
     length: 'long'
   }
+```
+
+###CSS
+
+toki.js is very hackable when it comes to css. Most of toki's rows and columns have ids and classes which makes it customizable all around.
+
+toki.js follows the normal table creation standards meaning the hierarchy looks like so:
+
+```html
+<div id="toki">
+  <table id="toki-cal-root">
+    <thead id="toki-cal-head">
+      <!--if fullHeading:true -->
+      <tr id="toki-cal-heading">
+        <td id="toki-month"></td>
+        <td id="toki-year"></td>
+      </tr>
+      <!--end if -->
+      <!--if fullHeading: false -->
+        <tr id="toki-heading-month">
+          <td id="toki-month"></td>
+        </tr>
+        <tr id="toki-heading-year">
+          <td id="toki-year"></td>
+        </tr>
+      <!--end if-->
+    </thead>
+    <tbody id="toki-cal-body">
+      <tr id="toki-weekdays">
+        <!--The weekdays go here in the following format:
+          <td id="toki-weekday-[name of weekday]"></td>
+          ...
+         -->
+      </tr>
+      <!-- The weeks go here in the following format:
+        <tr id="toki-week-[number of week (integer)]">
+          The days go below in the following format:
+          <td id="toki-day-[number of day (integer)]"></td>
+          ...
+        </tr>
+        ...
+      -->
+    </tbody>
+  </table>
+</div>
+```
+
+If you would like to access the current 'time/date', the following classes are available:
+
+```css
+
+.toki.month.now{
+  /*...*/
+}
+
+.toki.day.now{
+  /*...*/
+}
+
+.toki.year.now{
+  /*...*/
+}
+
+.toki.weekday.now{
+  /*...*/
+}
+
+.toki.week.now{
+  /*...*/
+}
 ```
