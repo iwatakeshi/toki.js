@@ -11,7 +11,7 @@
 (function() {
 
     var toki,
-        version = '0.0.1',
+        version = '0.0.2',
         //global month, day, year
         global = {
             month: new Date().getMonth(),
@@ -21,6 +21,11 @@
         month_name,
         month_names = {
             'en': {
+                long: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
+                short: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_'),
+                min: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_')
+            },
+            'en-us': {
                 long: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
                 short: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_'),
                 min: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_')
@@ -38,15 +43,35 @@
                 short: 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
                 min: 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
             },
+            'en-us': {
+                long: 'Sunday_Monday_Tuesday_Wednsday_Thursday_Friday_Saturday'.split('_'),
+                short: 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
+                min: 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
+            },
             'ja': {
                 long: '日曜日_月曜日_火曜日_水曜日_木曜日_金曜日_土曜日'.split('_'),
                 short: '日_月_火_水_木_金_土'.split('_'),
                 min: '日_月_火_水_木_金_土'.split('_'),
             }
         },
+        day_name,
+        day_names = {
+            'en': {
+                format: '%s'
+            },
+            'en-us':{
+                format: '%s'
+            },
+            'ja': {
+                format: '%s日'
+            }
+        },
         year_name,
         year_names = {
             'en': {
+                format: '%s'
+            },
+            'en-us': {
                 format: '%s'
             },
             'ja': {
@@ -108,10 +133,12 @@
             if (length) {
                 month_name = month_names[lang][length];
                 weekday_name = weekday_names[lang][length];
+                day_name = day_names[lang].format;
                 year_name = year_names[lang].format;
             } else {
                 month_name = month_names[lang][defaults.locale.length];
                 weekday_name = weekday_names[lang][defaults.locale.length];
+                day_name = day_names[lang].format;
                 year_name = year_names[lang].format;
             }
         }
@@ -246,7 +273,7 @@
             thead.tr.year.td.id = 'toki-year';
 
             thead.tr.month.td.appendChild(document.createTextNode(month_name[global.month]));
-            thead.tr.year.td.appendChild(document.createTextNode(global.year));
+            thead.tr.year.td.appendChild(document.createTextNode(sprintf(year_name, global.year)));
 
             //append heading to tr
             thead.tr.month.appendChild(thead.tr.month.td);
@@ -280,7 +307,7 @@
         var weekdays = ['sunday', 'monday', 'tuesday', 'wednsday', 'thursday', 'friday', 'saturday'];
         day_count.forEach(function(weekday) {
             tr.weekdays.td[weekdays[weekday]] = document.createElement('td');
-            if (weekday === day_count[new Date().getDay() - 1]) {
+            if (weekday === new Date().getDay()) {
                 tr.weekdays.td[weekdays[weekday]].className = 'toki weekday now';
             }
             tr.weekdays.td[weekdays[weekday]].id = 'toki-weekday-' + weekdays[weekday];
@@ -413,9 +440,17 @@
             case false:
                 global.month = month;
                 this.Date();
-                return month_name[global.month];
+                return global.month;
             default:
-                return month_name[global.month];
+                return global.month;
+        }
+    };
+
+    Toki.prototype.MonthName = function(month){
+        if(month !== undefined){
+            return month_name[month];
+        }else{
+           return month_name[this.Month()]; 
         }
     };
 
@@ -430,6 +465,14 @@
                 break;
         }
     };
+    Toki.prototype.DayName = function(day){
+        if(day){
+            return sprintf(day_name, day);
+        }else{
+            return sprintf(day_name, this.Day());
+        }
+    };
+
 
     Toki.prototype.Year = function(year) {
 
@@ -443,18 +486,26 @@
         }
     };
 
+    Toki.prototype.YearName = function(year){
+        if(year){
+            return sprintf(year_name, year);
+        }else{
+            return sprintf(year_name, this.Year());
+        }
+    };
+
     Toki.prototype.Date = function(month, day, year) {
         var cal = this.calendar;
 
-        if(month){
+        if (month) {
             global.month = month;
         }
 
-        if(day){
+        if (day) {
             global.day = day;
         }
 
-        if(year){
+        if (year) {
             global.year = year;
         }
 
@@ -509,8 +560,15 @@
     };
 
     toki.weeksInMonth = function(month, year) {
-        var firstOfMonth = new Date(year, month, 1);
-        var lastOfMonth = new Date(year, month, 0);
+        var firstOfMonth, lastOfMonth;
+        if (month && year) {
+            firstOfMonth = new Date(year, month, 1);
+            lastOfMonth = new Date(year, month, 0);
+        } else {
+            firstOfMonth = new Date(global.year, global.month, 1);
+            lastOfMonth = new Date(global.year, global.month, 0);
+        }
+
 
         var used = firstOfMonth.getDay() + lastOfMonth.getDate();
 
@@ -518,21 +576,40 @@
     };
 
     toki.daysInMonth = function(month, year) {
+        if (month && year) {
+            return [31, (toki.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
+        } else {
+            return [31, (toki.isLeapYear(global.year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][global.month];
+        }
 
-        return [31, (toki.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
     };
 
     toki.firstDayOfMonth = function(month, year) {
-        return new Date(year, month, 1);
+        if (month && year) {
+            return new Date(year, month, 1);
+        } else {
+            return new Date(global.year, global.month, 1);
+        }
+
     };
 
     toki.lastDayOfMonth = function(month, year) {
-        return new Date(year, month + 1, 0);
+        if (month && year) {
+            return new Date(year, month + 1, 0);
+        } else {
+            return new Date(global.year, global.month + 1, 0);
+        }
     };
 
     toki.weekOfMonth = function(month, day, year) {
-        var date = new Date(year, month, day),
-            _day = date.getDate();
+
+        var date;
+        if (month && day && year) {
+            date = new Date(year, month, day);
+        } else {
+            date = new Date(global.year, global.month, global.day);
+        }
+        var _day = date.getDate();
 
         _day += (date.getDay() == 0 ? 0 : 7 - date.getDay());
 
