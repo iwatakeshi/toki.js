@@ -3,6 +3,7 @@ toki.js
 
 The most basic and hack-able calendar for the web. Uses pure javascript and is Bootstrap ready.
 
+Sample Express app @ https://tokijs.herokuapp.com
 
 ###Usage
 
