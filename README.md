@@ -55,6 +55,7 @@ Month([month Number])
 ####MonthName()
 
 @description: See @return
+
 @return: Returns the name of the month given or the global month
 
 ```js
@@ -74,6 +75,7 @@ Day([day Number])
 ####DayName()
 
 @description: See @return
+
 @return: Returns the name of the daay given or the global day
 
 ```js
@@ -95,6 +97,7 @@ Year([year Number])
 ####YearName()
 
 @description: See @return
+
 @return: Returns the name of the year given or the global year
 
 ```js
