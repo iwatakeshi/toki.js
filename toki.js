@@ -54,19 +54,19 @@
                 min: '日_月_火_水_木_金_土'.split('_'),
             }
         },
-        day_name,
+        day_format,
         day_names = {
             'en': {
                 format: '%s'
             },
-            'en-us':{
+            'en-us': {
                 format: '%s'
             },
             'ja': {
                 format: '%s日'
             }
         },
-        year_name,
+        year_format,
         year_names = {
             'en': {
                 format: '%s'
@@ -133,13 +133,13 @@
             if (length) {
                 month_name = month_names[lang][length];
                 weekday_name = weekday_names[lang][length];
-                day_name = day_names[lang].format;
-                year_name = year_names[lang].format;
+                day_format = day_names[lang].format;
+                year_format = year_names[lang].format;
             } else {
                 month_name = month_names[lang][defaults.locale.length];
                 weekday_name = weekday_names[lang][defaults.locale.length];
-                day_name = day_names[lang].format;
-                year_name = year_names[lang].format;
+                day_format = day_names[lang].format;
+                year_format = year_names[lang].format;
             }
         }
     }
@@ -236,7 +236,7 @@
 
             //set heading
             thead.tr.td.month.appendChild(document.createTextNode(month_name[global.month]));
-            thead.tr.td.year.appendChild(document.createTextNode(sprintf(year_name, global.year)));
+            thead.tr.td.year.appendChild(document.createTextNode(sprintf(year_format, global.year)));
 
             //append heading to tr
             thead.tr.appendChild(thead.tr.td.month);
@@ -273,7 +273,7 @@
             thead.tr.year.td.id = 'toki-year';
 
             thead.tr.month.td.appendChild(document.createTextNode(month_name[global.month]));
-            thead.tr.year.td.appendChild(document.createTextNode(sprintf(year_name, global.year)));
+            thead.tr.year.td.appendChild(document.createTextNode(sprintf(year_format, global.year)));
 
             //append heading to tr
             thead.tr.month.appendChild(thead.tr.month.td);
@@ -354,68 +354,84 @@
          */
         var week = 0;
         var day = 0;
+        var spaces = 0;
+        var firstDay = toki.firstDayOfMonth(global.month, global.year).getDay();
         var weeksInMonth = toki.weeksInMonth(global.month, global.year);
+
         weeks.forEach(function(item, index) {
-            var week = index + 1;
+            week = index + 1;
+            if (week === 1) {
 
-            if (week < weeksInMonth) {
-                //first week
-                if (index === 0) {
-                    //seven days in a week
-                    for (var count = 0; count < 6; count++) {
-                        var firstDay = toki.firstDayOfMonth(global.month, global.year).getDate();
-                        if (count < firstDay) {
-                            item.appendChild(document.createElement('td'));
-                        }
+                while (day < 7) {
+                    if (day < firstDay) {
+                        item.appendChild(document.createElement('td'));
+                        //count the number of spaces we have filled with td
+                        spaces++;
+                    }
 
-                        if (count === firstDay) {
-                            while (day < count) {
-                                item.appendChild(days_dom[day++]);
-                            }
-                        }
+                    if (day === firstDay || day > firstDay) {
+                        //lets take account of the spaces
+                        //and append the days into the table
+                        item.appendChild(days_dom[Math.abs(day - spaces)]);
+                    }
 
-                        if (count > firstDay) {
-                            while (day <= count) {
-                                item.appendChild(days_dom[day++]);
-                            }
-                        }
-                    }
-                }
-                //second week
-                if (index === 1) {
-                    while (day < (7 * week) - 1) {
-                        item.appendChild(days_dom[day++]);
-                    }
-                }
-
-                //third week
-                if (index === 2) {
-                    while (day < (7 * week) - 1) {
-                        item.appendChild(days_dom[day++]);
-                    }
-                }
-                //fourth week
-                if (index === 3) {
-                    while (day < (7 * week) - 1) {
-                        item.appendChild(days_dom[day++]);
-                    }
+                    day++;
                 }
             }
 
-            if (week === weeksInMonth) {
-                while (day < (7 * week) - 1) {
-                    var finalDays = days_dom[day++];
-                    if (finalDays !== undefined) {
-                        item.appendChild(finalDays);
-                    } else {
-                        item.appendChild(document.createElement('td'))
+            if (week === 2) {
+                day = Math.abs(day - spaces);
+                while (day < Math.abs((7 * week) - spaces)) {
+                    item.appendChild(days_dom[day++])
+                }
+            }
+
+            if (week === 3 || week === 4) {
+
+                while (day < Math.abs((7 * week) - spaces)) {
+                    item.appendChild(days_dom[day++])
+                }
+            }
+
+            if (week === 5) {
+                if (weeks.length !== 6) {
+                    while (day < Math.abs((7 * week) - spaces)) {
+                        var finalDays = days_dom[day++];
+                        if (finalDays !== undefined) {
+                            item.appendChild(finalDays);
+                        } else {
+                            item.appendChild(document.createElement('td'))
+                        }
                     }
+                } else {
+                    while (day < Math.abs((7 * week) - spaces)) {
+                        var finalDays = days_dom[day++];
+                        if(finalDays !== undefined){
+                            item.appendChild(finalDays);
+                        }
+                        
+                    }
+                }
+
+            }
+
+            if (week === 6) {
+                var daysInMonth = toki.daysInMonth(global.month, global.year);
+                while (day < daysInMonth) {
+                    item.appendChild(days_dom[day++]);
+                }
+                var remainder = 0;
+                while(remainder < daysInMonth - (daysInMonth - spaces)){
+                    item.appendChild(document.createElement('td'));
+                    remainder++;
                 }
             }
 
             if (week == toki.weekOfMonth(global.year, global.month, global.day)) {
                 item.className = 'toki week now';
             }
+
+            //increment the number of weeks
             week++;
 
         });
@@ -446,11 +462,11 @@
         }
     };
 
-    Toki.prototype.MonthName = function(month){
-        if(month !== undefined){
+    Toki.prototype.MonthName = function(month) {
+        if (month !== undefined) {
             return month_name[month];
-        }else{
-           return month_name[this.Month()]; 
+        } else {
+            return month_name[this.Month()];
         }
     };
 
@@ -465,11 +481,11 @@
                 break;
         }
     };
-    Toki.prototype.DayName = function(day){
-        if(day){
-            return sprintf(day_name, day);
-        }else{
-            return sprintf(day_name, this.Day());
+    Toki.prototype.DayName = function(day) {
+        if (day) {
+            return sprintf(day_format, day);
+        } else {
+            return sprintf(day_format, this.Day());
         }
     };
 
@@ -486,11 +502,11 @@
         }
     };
 
-    Toki.prototype.YearName = function(year){
-        if(year){
-            return sprintf(year_name, year);
-        }else{
-            return sprintf(year_name, this.Year());
+    Toki.prototype.YearName = function(year) {
+        if (year) {
+            return sprintf(year_format, year);
+        } else {
+            return sprintf(year_format, this.Year());
         }
     };
 

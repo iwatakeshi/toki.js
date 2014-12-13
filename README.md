@@ -36,12 +36,22 @@ The most basic and hack-able calendar for the web. Uses pure javascript and is B
 
 @description: Sets the month with ranges from 0 - 11
 
-@return: Returns the global month name in String
+@return: Returns the global month in Number
 
 ```js
 Month([month Number])
 
 ```
+
+####MonthName()
+
+@description: See @return
+@return: Returns the name of the month given or the global month
+
+```js
+MonthName([year Number])
+```
+
 ####Day()
 
 @description: Sets the day of the current month
@@ -51,15 +61,37 @@ Month([month Number])
 ```js
 Day([day Number])
 ```
+
+####DayName()
+
+@description: See @return
+@return: Returns the name of the daay given or the global day
+
+```js
+DayName([year Number])
+```
+
 ####Year()
 
 @description: Sets the year.
 
 @return: Returns global year
 
+
 ```js
 Year([year Number])
 ```
+
+
+####YearName()
+
+@description: See @return
+@return: Returns the name of the year given or the global year
+
+```js
+YearName([year Number])
+```
+
 
 ####Date()
 
