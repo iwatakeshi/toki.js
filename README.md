@@ -3,7 +3,15 @@ toki.js
 
 The most basic and hack-able calendar for the web. Uses pure javascript and is Bootstrap ready.
 
+Toki also supports locales. The following are supported:
+
+* en
+* en-us
+* ja
+
 Sample Express app @ https://tokijs.herokuapp.com
+
+Note: The site is powered by an i18n library called [gengo.js](https://www.github.com/iwatakeshi/gengojs). Therefore, it will translate it into your language if available. If you want to translate it, simply fork the site [here](https://www.github.com/iwatakeshi/toki.js-site)
 
 ###Usage
 
