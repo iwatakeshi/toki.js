@@ -290,6 +290,10 @@ If you would like to access the current 'time/date', the following classes are a
   /*...*/
 }
 
+.toki.day.changed{
+  /*...*/
+}
+
 .toki.year.now{
   /*...*/
 }
@@ -299,6 +303,10 @@ If you would like to access the current 'time/date', the following classes are a
 }
 
 .toki.week.now{
+  /*...*/
+}
+
+.toki.week.changed{
   /*...*/
 }
 ```

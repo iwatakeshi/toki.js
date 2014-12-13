@@ -3,6 +3,7 @@
  * toki
  * author : Takeshi Iwana
  * https://github.com/iwatakeshi
+ * https://github.com/iwatakeshi/toki.js
  * license : MIT
  * Code heavily borrowed from Adam Draper
  * https://github.com/adamwdraper
@@ -11,7 +12,7 @@
 (function() {
 
     var toki,
-        version = '0.0.2',
+        version = '0.0.3',
         //global month, day, year
         global = {
             month: new Date().getMonth(),
@@ -342,6 +343,8 @@
             tr.days['day_' + day] = document.createElement('td');
             if (day === global.day) {
                 tr.days['day_' + day].className = 'toki day now';
+            }else{
+                tr.days['day_' + day].className = 'toki day changed';
             }
             tr.days['day_' + day].id = 'toki-day-' + day;
             tr.days['day_' + day].appendChild(document.createTextNode(day));
@@ -406,10 +409,10 @@
                 } else {
                     while (day < Math.abs((7 * week) - spaces)) {
                         var finalDays = days_dom[day++];
-                        if(finalDays !== undefined){
+                        if (finalDays !== undefined) {
                             item.appendChild(finalDays);
                         }
-                        
+
                     }
                 }
 
@@ -421,15 +424,21 @@
                     item.appendChild(days_dom[day++]);
                 }
                 var remainder = 0;
-                while(remainder < daysInMonth - (daysInMonth - spaces)){
+                while (remainder < daysInMonth - (daysInMonth - spaces)) {
                     item.appendChild(document.createElement('td'));
                     remainder++;
                 }
             }
+            
+            if (global.month === new Date().getMonth() && global.year == new Date().getFullYear()) {
+                    if (week === toki.weekOfMonth(global.month, new Date().getDate(), global.year)) {
+                        item.className = 'toki week now';
+                    }else{
+                        item.className = 'toki week changed';
+                    }
 
-            if (week == toki.weekOfMonth(global.year, global.month, global.day)) {
-                item.className = 'toki week now';
             }
+
 
             //increment the number of weeks
             week++;
