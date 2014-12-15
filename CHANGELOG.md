@@ -15,3 +15,12 @@ Changelog
 
 * Fixed calendar's algorithm
 * Updated readme to reflect with method changes and additions
+
+**0.0.4**
+
+* New APIs for changing the first day of week.
+* Updated readme
+
+**0.0.5**
+
+* Bug fixes

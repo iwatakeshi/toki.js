@@ -12,7 +12,7 @@
 (function() {
 
     var toki,
-        version = '0.0.4',
+        version = '0.0.5',
         //global month, day, year
         global = {
             month: new Date().getMonth(),
@@ -131,9 +131,9 @@
             return undefined;
         }
     }
-
+    
     //set options
-    function options(opt) {
+    function options(opt){
         opts.fullHeading = opt.fullHeading || defaults.fullHeading;
         opts.bootstrap = opt.bootstrap || defaults.bootstrap;
         opts.hover = opt.hover || defaults.hover;
@@ -214,7 +214,7 @@
             this.element = document.getElementById('toki');
             options(div)
         }
-
+        
 
         locale(global.locale.lang, global.locale.length);
 
@@ -354,7 +354,7 @@
         var weekdays = ['sunday', 'monday', 'tuesday', 'wednsday', 'thursday', 'friday', 'saturday'];
         day_count().forEach(function(weekday) {
             tr.weekdays.td[weekdays[weekday]] = document.createElement('td');
-            if (weekday === day_count()[new Date().getDay()]) {
+            if (weekday === new Date().getDay()) {
                 tr.weekdays.td[weekdays[weekday]].className = 'toki weekday now';
             }
             tr.weekdays.td[weekdays[weekday]].id = 'toki-weekday-' + weekdays[weekday];
@@ -477,10 +477,9 @@
                     } else {
                         item.appendChild(document.createElement('td'));
                     }
-
+                    
                 }
             }
-
             if (week === 7) {
                 while (day < (week * 7) - spaces) {
                     item.appendChild(document.createElement('td'))
@@ -494,7 +493,9 @@
                 } else {
                     item.className = 'toki week changed';
                 }
+
             }
+
 
             //increment the number of weeks
             week++;
@@ -513,18 +514,18 @@
             tbody: tbody
         };
     };
-
+    
     /**
      * Setters
      */
-    Toki.prototype.FirstDayOfWeek = function(weekday) {
+    Toki.prototype.firstDayOfWeek = function (weekday){
         switch (weekday === undefined) {
             case false:
                 opts.start = parseInt(weekday);
                 remove('toki-cal-head');
                 remove('toki-cal-body');
                 options(opts);
-
+                
                 this.calendar.appendChild(calendar().thead);
                 this.calendar.appendChild(calendar().tbody);
                 break;
@@ -667,7 +668,7 @@
         this.Year(new Date().getFullYear());
     };
 
-    Toki.prototype.Locale = function(lang, length) {
+    Toki.prototype.Locale = function (lang, length) {
         global.locale.lang = lang;
         global.locale.length = length;
         locale(lang, length);
