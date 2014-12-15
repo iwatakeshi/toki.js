@@ -40,170 +40,30 @@ Note: The site is powered by an i18n library called [gengo.js](https://www.githu
 **Note:** toki.js can be initialize without any arguments. When done so, toki assumes that a div with an id='toki' will exist. It will also initialize with the default options.
 
 ###API
-
-####Month()
-
-@description: Sets the month with ranges from 0 - 11
-
-@return: Returns the global month in Number
-
-```js
-Month([month Number])
-
-```
-
-####MonthName()
-
-@description: See @return
-
-@return: Returns the name of the month given or the global month
-
-```js
-MonthName([year Number])
-```
-
-####Day()
-
-@description: Sets the day of the current month
-
-@return: Returns global day
-
-```js
-Day([day Number])
-```
-
-####DayName()
-
-@description: See @return
-
-@return: Returns the name of the daay given or the global day
-
-```js
-DayName([year Number])
-```
-
-####Year()
-
-@description: Sets the year.
-
-@return: Returns global year
-
-
-```js
-Year([year Number])
-```
-
-
-####YearName()
-
-@description: See @return
-
-@return: Returns the name of the year given or the global year
-
-```js
-YearName([year Number])
-```
-
-
-####Date()
-
-@description: Sets the date.
-
-@return: (not implemented)
-
-```js
-Date([month Number], [day Number], [year Number]);
-```
-
-####Reset()
-
-@description: Resets the date.
-
-```js
-Reset();
-```
-
-####Locale()
-
-@description: Set's the locale.
-
-```js
-Locale([lang String],[length String]);
-//example of lang:
-/*
-  * en
-  * ja
-*/
-
-//example of length
-/*
-  * long
-  * short
-  * min
-*/
-
-```
-
-
-#####Static API
-
-######isLeapYear()
-
-@description: Checks if the given year is a leap year.
-
-@return Returns a Boolean for a given year.
-
-```js
-isLeapYear([year Number]);
-```
-
-######weeksInMonth()
-
-@description: see @return
-
-@return Returns the number of weeks for a given month and year
-
-```js
-weeksInMonth([month Number], [year Number]);
-```
-
-######daysInMonth()
-
-@description: see @return
-
-@return Returns the number of days for a given month and year
-
-```js
-daysInMonth([month Number], [year Number]);
-```
-
-######firstDayOfMonth()
-
-@description: see @return
-
-@return Returns the first day (index of weekday) for a given month and year.
-
-```js
-firstDayOfMonth([month Number], [year Number]);
-```
-######lastDayOfMonth()
-
-@description: see @return
-
-@return Returns the last day (index of weekday) for a given month and year.
-
-```js
-lastDayOfMonth([month Number], [year Number]);
-```
-######weekOfMonth()
-
-@description: see @return
-
-@return Returns the current week for a given month, day, and year.
-
-```js
-weekOfMonth([month Number], [day Number], [year Number]);
-```
+|Method   |Description  |Return   |Args |
+|---------|-------------|---------|--------|
+|`Month()`|Sets the month with ranges from 0-11|Returns the global month in Number.    |`(month:Number)` 
+|`MonthName()`|         |Returns the name of the month given or the global month in String. |`(month:Number)`
+|`MonthNames()`|        |Returns an array of months set to the global locale.| `(length:String)`
+|`Day()`|Sets the day of the current month|Returns global day in Number.|`(day:Number)`
+|`DayNames()`|          |Returns an array of days set to the global locale in String.| `(length:String)`
+|`Year()`|Sets the year.|Returns the global year in Number.|`(year:Number)`
+|`YearName()`|          |Returns the name of the given or the global year in String.| `(year:Number)`
+|`WeekdayName`|         |Returns the name of the given weekday or the current month's weekday in String.|`(weekday:Number)`
+|`WeekdayNames`|         |Returns an array of weekdays set to the global locale in String.|`(length:String)`
+|`Date()`|Sets the date.|         |`(month:Number, day:Number, year:Number)`
+|`Reset()`|Resets the date.|          |
+|`Locale()`|Sets the locale.|          |`(lang:String,length:String)`
+|`FirstDayOfWeek`|Sets the calendar to start from the given weekday in range 0-6.| Returns the current starting weekday in Number.| `(weekday:Number)`
+
+###Static API
+|Method   |Description  |Returns  |Args    |
+|---------|-------------|---------|--------|
+|`isLeapYear()`|Checks if the given year is a leap year.| Boolean | `(year:Number)`
+|`weeksInMonth()`|      |Returns the number of weeks for a given month and year or the global date in Number| `(month:Number, year:Number)`
+|`daysInMonth()`|       |Returns the number of days for a given month and year or the global date in Number.| `(month:Number, year:Number)`
+|`firstDayOfMonth()`|         |Returns the first day (index of weekday) for a given month and year| `(month:Number, year:Number)`
+|`weekOfMonth()`|         |Returns the current week for a given month, day, and year or the global date in Number| `(month:Number, day:Number, year:Number)`
 
 ###Options
 
