@@ -66,6 +66,7 @@ Note: The site is powered by an i18n library called [gengo.js](https://www.githu
 |`daysInMonth()`|       |Returns the number of days for a given month and year or the global date in Number.| `(month:Number, year:Number)`
 |`firstDayOfMonth()`|         |Returns the first day (index of weekday) for a given month and year| `(month:Number, year:Number)`
 |`weekOfMonth()`|         |Returns the current week for a given month, day, and year or the global date in Number| `(month:Number, day:Number, year:Number)`
+|`defineLocale()`| Used to import locales. See Locales|       |`(lang:String, locale:Object)`
 
 ###Options
 
