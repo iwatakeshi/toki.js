@@ -8,6 +8,8 @@ Toki also supports locales. The following are supported:
 * en
 * en-us
 * ja
+* af
+* see Locales to add more!
 
 Sample Express app @ https://tokijs.herokuapp.com
 
@@ -103,6 +105,10 @@ Note: The site is powered by an i18n library called [gengo.js](https://www.githu
     length: 'long'
   }
 ```
+
+###Locales
+
+toki.js allows you to create your own locale plugin. See the [gist](https://gist.github.com/iwatakeshi/1ff6650aa3ee20106d85) for a template.
 
 ###CSS
 

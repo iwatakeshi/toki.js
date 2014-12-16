@@ -1,4 +1,5 @@
-/*jslint node: true, forin: true, jslint white: true, newcap: true*/
+/*jslint node: true, forin: true, white: true, newcap: true*/
+/*jslint browser:true */
 /*
  * toki
  * author : Takeshi Iwana
@@ -12,7 +13,7 @@
 (function() {
 
     var toki,
-        version = '0.0.5',
+        version = '0.0.6',
         //global month, day, year
         global = {
             month: new Date().getMonth(),
@@ -23,66 +24,66 @@
                 length: 'long'
             }
         },
+        locales = {
+            en: {
+                month: {
+                    long: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
+                    short: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_'),
+                    min: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_')
+                },
+                weekday: {
+                    long: 'Sunday_Monday_Tuesday_Wednsday_Thursday_Friday_Saturday'.split('_'),
+                    short: 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
+                    min: 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_')
+                },
+                day: {
+                    format: '%s'
+                },
+                year: {
+                    format: '%s'
+                }
+            },
+            'en-us': {
+                month: {
+                    long: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
+                    short: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_'),
+                    min: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_')
+                },
+                weekday: {
+                    long: 'Sunday_Monday_Tuesday_Wednsday_Thursday_Friday_Saturday'.split('_'),
+                    short: 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
+                    min: 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_')
+                },
+                day: {
+                    format: '%s'
+                },
+                year: {
+                    format: '%s'
+                }
+            },
+            ja: {
+                month: {
+                    long: '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
+                    short: '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
+                    min: '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_')
+                },
+                weekday: {
+                    long: '日曜日_月曜日_火曜日_水曜日_木曜日_金曜日_土曜日'.split('_'),
+                    short: '日_月_火_水_木_金_土'.split('_'),
+                    min: '日_月_火_水_木_金_土'.split('_')
+                },
+                day: {
+                    format: '%s日'
+                },
+                year: {
+                    format: '%s年'
+                }
+            }
+        },
         month_name,
-        month_names = {
-            'en': {
-                long: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
-                short: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_'),
-                min: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_')
-            },
-            'en-us': {
-                long: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
-                short: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_'),
-                min: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sept_Oct_Nov_Dec'.split('_')
-            },
-            'ja': {
-                long: '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
-                short: '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
-                min: '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_')
-            }
-        },
         weekday_name,
-        weekday_names = {
-            'en': {
-                long: 'Sunday_Monday_Tuesday_Wednsday_Thursday_Friday_Saturday'.split('_'),
-                short: 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
-                min: 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
-            },
-            'en-us': {
-                long: 'Sunday_Monday_Tuesday_Wednsday_Thursday_Friday_Saturday'.split('_'),
-                short: 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
-                min: 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
-            },
-            'ja': {
-                long: '日曜日_月曜日_火曜日_水曜日_木曜日_金曜日_土曜日'.split('_'),
-                short: '日_月_火_水_木_金_土'.split('_'),
-                min: '日_月_火_水_木_金_土'.split('_'),
-            }
-        },
         day_format,
-        day_names = {
-            'en': {
-                format: '%s'
-            },
-            'en-us': {
-                format: '%s'
-            },
-            'ja': {
-                format: '%s日'
-            }
-        },
         year_format,
-        year_names = {
-            'en': {
-                format: '%s'
-            },
-            'en-us': {
-                format: '%s'
-            },
-            'ja': {
-                format: '%s年'
-            }
-        },
         defaults = {
             fullHeading: false,
             bootstrap: false,
@@ -105,7 +106,7 @@
             return new Error(message);
         }
         if (message && filename) {
-            return new Error(message, filename)
+            return new Error(message, filename);
         }
         if (message && filename && linenumber) {
             return new Error(message, filename, linenumber);
@@ -131,18 +132,32 @@
             return undefined;
         }
     }
-    
+
+    function isPlainObj(obj) {
+        return typeof obj == 'object' && obj.constructor == Object;
+    }
+
     //set options
-    function options(opt){
-        opts.fullHeading = opt.fullHeading || defaults.fullHeading;
-        opts.bootstrap = opt.bootstrap || defaults.bootstrap;
-        opts.hover = opt.hover || defaults.hover;
-        opts.debug = opt.debug || defaults.debug;
-        opts.start = opt.start || defaults.start;
-        if (opt.locale) {
-            global.locale.lang = opt.locale.lang;
-            global.locale.length = opt.locale.length;
+    function options(opt) {
+        opts.fullHeading = typeof opt != "undefined" ? (opt.fullHeading || defaults.fullHeading) : defaults.fullHeading;
+        opts.bootstrap = typeof opt != "undefined" ? (opt.bootstrap || defaults.bootstrap) : defaults.bootstrap;
+        opts.hover = typeof opt != "undefined" ? (opt.hover || defaults.hover) : defaults.bootstrap;
+        opts.debug = typeof opt != "undefined" ? (opt.debug || defaults.debug) : defaults.debug;
+        opts.start = typeof opt != "undefined" ? (opt.start || defaults.start) : defaults.start;
+        if (isPlainObj(opt)) {
+            if (opt.locale) {
+                global.locale.lang = typeof opt != "undefined" ? opt.locale.lang : defaults.locale.lang;
+                global.locale.length = typeof opt != "undefined" ? opt.locale.length : defaults.locale.length;
+            } else {
+                global.locale.lang = defaults.locale.lang;
+                global.locale.length = defaults.locale.length;
+            }
+        } else {
+            global.locale.lang = defaults.locale.lang;
+            global.locale.length = defaults.locale.length;
         }
+
+
     }
 
     function remove(id) {
@@ -152,16 +167,17 @@
     function locale(lang, length) {
         if (lang) {
             if (length) {
-                month_name = month_names[lang][length];
-                weekday_name = weekday_names[lang][length];
-                day_format = day_names[lang].format;
-                year_format = year_names[lang].format;
+                month_name = locales[lang].month[length];
+                weekday_name = locales[lang].weekday[length];
+                day_format = locales[lang].day.format;
+                year_format = locales[lang].year.format;
             } else {
-                month_name = month_names[lang][defaults.locale.length];
-                weekday_name = weekday_names[lang][defaults.locale.length];
-                day_format = day_names[lang].format;
-                year_format = year_names[lang].format;
+                month_name = locales[lang].month[defaults.locale.length];
+                weekday_name = locales[lang].weekday[defaults.locale.length];
+                day_format = locales[lang].day.format;
+                year_format = locales[lang].year.format;
             }
+            //we will eventually need to pass opts back
         }
     }
 
@@ -169,7 +185,7 @@
         var arg = arguments;
         var i = 1;
         return format.replace(/%((%)|s)/g, function(m) {
-            return m[2] || arg[i++]
+            return m[2] || arg[i++];
         });
     }
 
@@ -177,28 +193,20 @@
         switch (opts.start) {
             case 0:
                 return [0, 1, 2, 3, 4, 5, 6];
-                break;
             case 1:
                 return [1, 2, 3, 4, 5, 6, 0];
-                break;
             case 2:
                 return [2, 3, 4, 5, 6, 0, 1];
-                break;
             case 3:
                 return [3, 4, 5, 6, 0, 1, 2];
-                break;
             case 4:
                 return [4, 5, 6, 0, 1, 2, 3];
-                break;
             case 5:
                 return [5, 6, 0, 1, 2, 3, 4];
-                break;
             case 6:
                 return [6, 0, 1, 2, 3, 4, 5];
-                break;
             default:
                 return [0, 1, 2, 3, 4, 5, 6];
-                break;
         }
     }
 
@@ -209,19 +217,19 @@
 
         if (typeof div === String) {
             this.element = document.getElementById(div);
-            options(opt)
+            options(opt);
         } else {
             this.element = document.getElementById('toki');
-            options(div)
+            options(div);
         }
-        
+
 
         locale(global.locale.lang, global.locale.length);
 
         this.calendar = document.createElement('table');
 
         if (opts.bootstrap) {
-            this.calendar.className = 'table table-responsive'
+            this.calendar.className = 'table table-responsive';
         }
 
         if (opts.hover) {
@@ -256,7 +264,7 @@
         var thead = document.createElement('thead');
 
         //set id
-        thead.id = 'toki-cal-head'
+        thead.id = 'toki-cal-head';
 
         //apply heading
         if (opts.fullHeading) {
@@ -406,8 +414,6 @@
         var spaces = 0;
         var firstDay = toki.firstDayOfMonth(global.month, global.year).getDay();
         firstDay = [0, 1, 2, 3, 4, 5, 6][day_count().indexOf(firstDay)];
-        var weeksInMonth = toki.weeksInMonth(global.month, global.year);
-
 
         weeks.forEach(function(item, index) {
 
@@ -433,34 +439,35 @@
             if (week === 2) {
                 day = Math.abs(day - spaces);
                 while (day < Math.abs((7 * week) - spaces)) {
-                    item.appendChild(days_dom[day++])
+                    item.appendChild(days_dom[day++]);
                 }
             }
 
             if (week === 3 || week === 4) {
 
                 while (day < Math.abs((7 * week) - spaces)) {
-                    item.appendChild(days_dom[day++])
+                    item.appendChild(days_dom[day++]);
                 }
             }
 
             if (week === 5) {
+                var finalDays;
                 if (weeks.length !== 6) {
                     while (day < Math.abs((7 * week) - spaces)) {
-                        var finalDays = days_dom[day++];
+                        finalDays = days_dom[day++];
                         if (finalDays !== undefined) {
                             item.appendChild(finalDays);
                         } else {
-                            item.appendChild(document.createElement('td'))
+                            item.appendChild(document.createElement('td'));
                         }
                     }
                 } else {
                     while (day < Math.abs((7 * week) - spaces)) {
-                        var finalDays = days_dom[day++];
+                        finalDays = days_dom[day++];
                         if (finalDays !== undefined) {
                             item.appendChild(finalDays);
                         } else {
-                            item.appendChild(document.createElement('td'))
+                            item.appendChild(document.createElement('td'));
                         }
 
                     }
@@ -469,20 +476,19 @@
             }
 
             if (week === 6) {
-                var daysInMonth = toki.daysInMonth(global.month, global.year);
                 while (day < (week * 7) - spaces) {
-                    var carryOver = days_dom[day++]
+                    var carryOver = days_dom[day++];
                     if (carryOver) {
                         item.appendChild(carryOver);
                     } else {
                         item.appendChild(document.createElement('td'));
                     }
-                    
+
                 }
             }
             if (week === 7) {
                 while (day < (week * 7) - spaces) {
-                    item.appendChild(document.createElement('td'))
+                    item.appendChild(document.createElement('td'));
                     day++;
                 }
             }
@@ -513,33 +519,32 @@
             thead: thead,
             tbody: tbody
         };
-    };
-    
+    }
+
     /**
      * Setters
      */
-    Toki.prototype.firstDayOfWeek = function (weekday){
+    Toki.prototype.firstDayOfWeek = function(weekday) {
         switch (weekday === undefined) {
             case false:
                 opts.start = parseInt(weekday);
                 remove('toki-cal-head');
                 remove('toki-cal-body');
-                options(opts);
-                
+                //options(opts);
+
                 this.calendar.appendChild(calendar().thead);
                 this.calendar.appendChild(calendar().tbody);
                 break;
             default:
                 return opts.start;
-                break;
         }
-    }
+    };
     /**
      * Getters
      */
 
     Toki.prototype.WeekdayNames = function(length) {
-        return weekday_names[global.locale.lang][length || 'long'];
+        return locales[global.locale.lang].weekday[length || 'long'];
     };
     Toki.prototype.WeekdayName = function(weekday) {
         if (weekday !== undefined) {
@@ -550,7 +555,7 @@
     };
 
     Toki.prototype.MonthNames = function(length) {
-        return month_names[global.locale.lang][length || 'long'];
+        return locales[global.locale.lang].month[length || 'long'];
     };
 
     /**
@@ -562,7 +567,11 @@
         //compare to undefined because '0' can be considered as default
         switch (month === undefined) {
             case false:
-                global.month = month;
+                if (month > -1 && month < 12) {
+                    global.month = month;
+                } else {
+                    global.month = global.month;
+                }
                 this.Date();
                 return global.month;
             default:
@@ -586,7 +595,6 @@
                 return global.day;
             default:
                 return global.day;
-                break;
         }
     };
     Toki.prototype.DayName = function(day) {
@@ -622,7 +630,11 @@
         var cal = this.calendar;
 
         if (month) {
-            global.month = month;
+            if (month > -1 && month < 12) {
+                global.month = month;
+            } else {
+                global.month = global.month;
+            }
         }
 
         if (day) {
@@ -632,11 +644,11 @@
         if (year) {
             global.year = year;
         }
-
+        var dom_month, dom_year;
         //update
         if (opts.fullHeading) {
-            var dom_month = ['toki-cal-head', 'toki-heading', 'toki-month'];
-            var dom_year = ['toki-cal-head', 'toki-heading', 'toki-year'];
+            dom_month = ['toki-cal-head', 'toki-heading', 'toki-month'];
+            dom_year = ['toki-cal-head', 'toki-heading', 'toki-year'];
             //remove
             find(find(cal, dom_month[0]), dom_month[1]).removeChild(find(find(find(cal, dom_month[0]), dom_month[1]), dom_month[2]));
             find(find(cal, dom_year[0]), dom_year[1]).removeChild(find(find(find(cal, dom_year[0]), dom_year[1]), dom_year[2]));
@@ -647,8 +659,8 @@
             cal.appendChild(calendar().tbody);
         } else {
 
-            var dom_month = ['toki-cal-head', 'toki-heading-month', 'toki-month'];
-            var dom_year = ['toki-cal-head', 'toki-heading-year', 'toki-year'];
+            dom_month = ['toki-cal-head', 'toki-heading-month', 'toki-month'];
+            dom_year = ['toki-cal-head', 'toki-heading-year', 'toki-year'];
 
             //remove
             find(find(cal, dom_month[0]), dom_month[1]).removeChild(find(find(find(cal, dom_month[0]), dom_month[1]), dom_month[2]));
@@ -668,7 +680,7 @@
         this.Year(new Date().getFullYear());
     };
 
-    Toki.prototype.Locale = function (lang, length) {
+    Toki.prototype.Locale = function(lang, length) {
         global.locale.lang = lang;
         global.locale.length = length;
         locale(lang, length);
@@ -737,11 +749,16 @@
         }
         var _day = date.getDate();
 
-        _day += (date.getDay() == 0 ? 0 : 7 - date.getDay());
+        _day += (date.getDay() === 0 ? 0 : 7 - date.getDay());
 
         return Math.ceil(parseFloat(_day) / 7);
     };
 
+    toki.defineLocale = function(locale, obj) {
+        if (typeof obj !== 'undefined' && typeof locales[locale] === 'undefined') {
+            locales[locale] = obj;
+        }
+    };
     /************************************
       Exposing toki
   ************************************/

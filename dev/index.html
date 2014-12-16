@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel='stylesheet' href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="toki"></div>
+    <script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+    <script src="../toki.js">
+    </script>
+    <script src="../locales/af.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var t = toki({
+                fullHeading: true,
+                bootstrap: true
+            });
+            t.Locale('af');
+        })
+    </script>
+</body>
+
+</html>

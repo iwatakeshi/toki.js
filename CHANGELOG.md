@@ -24,3 +24,10 @@ Changelog
 **0.0.5**
 
 * Bug fixes
+
+**0.0.6**
+
+* Cleanup
+* Bug fixes
+* Added a new language: *af.js*
+* Added dev stuff
