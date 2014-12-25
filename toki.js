@@ -13,7 +13,7 @@
 (function() {
 
     var toki,
-        version = '0.0.6',
+        version = '0.0.7',
         //global month, day, year
         global = {
             month: new Date().getMonth(),
@@ -431,7 +431,7 @@
                         //and append the days into the table
                         item.appendChild(days_dom[Math.abs(day - spaces)]);
                     }
-
+                    
                     day++;
                 }
             }
@@ -452,8 +452,7 @@
 
             if (week === 5) {
                 var finalDays;
-                if (weeks.length !== 6) {
-                    while (day < Math.abs((7 * week) - spaces)) {
+                 while (day < Math.abs((7 * week) - spaces)) {
                         finalDays = days_dom[day++];
                         if (finalDays !== undefined) {
                             item.appendChild(finalDays);
@@ -461,18 +460,6 @@
                             item.appendChild(document.createElement('td'));
                         }
                     }
-                } else {
-                    while (day < Math.abs((7 * week) - spaces)) {
-                        finalDays = days_dom[day++];
-                        if (finalDays !== undefined) {
-                            item.appendChild(finalDays);
-                        } else {
-                            item.appendChild(document.createElement('td'));
-                        }
-
-                    }
-                }
-
             }
 
             if (week === 6) {
@@ -483,7 +470,6 @@
                     } else {
                         item.appendChild(document.createElement('td'));
                     }
-
                 }
             }
             if (week === 7) {
@@ -499,7 +485,6 @@
                 } else {
                     item.className = 'toki week changed';
                 }
-
             }
 
 

@@ -39,7 +39,7 @@ Note: The site is powered by an i18n library called [gengo.js](https://www.githu
   </script>
   ```
 
-**Note:** toki.js can be initialize without any arguments. When done so, toki assumes that a div with an id='toki' will exist. It will also initialize with the default options.
+**Note:** toki.js can be initialize without any arguments. When done so, toki assumes that a div with an id='toki' will exist. It will also initialize with the default options. Also, if you are creating a plugin system for toki, keep in mind that toki updates its cell by removing/swapping the head or the body of the table. Therefore if you have some events stored in a cell, make sure to add it back. If you can come up with a better way for toki to update its cell please fork this project and create a pull request.
 
 ###API
 |Method   |Description  |Return   |Args |
